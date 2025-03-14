@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mp-client
+  namespace: oteam-mvne-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mp-client
+  template:
+    metadata:
+      labels:
+        app: mp-client
+    spec:
+      containers:
+      - name: mp-client
+        image: oteamcr.azurecr.io/mvne/mp-client:1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 18080
+        resources:
+          requests:
+            cpu: 256m
+            memory: 256Mi
+          limits:
+            cpu: 1024m
+            memory: 1024Mi
+        volumeMounts:
+        - name: runtime-config
+          mountPath: /usr/share/nginx/html/runtime-env.js
+          subPath: runtime-env.js
+      volumes:
+      - name: runtime-config
+        configMap:
+          name: mp-client-cm
