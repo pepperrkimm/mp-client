@@ -67,9 +67,9 @@ podTemplate(
 
                         podman build \
                             --build-arg PROJECT_FOLDER="." \
-                            --build-arg BUILD_FOLDER="deployment" \
+                            --build-arg BUILD_FOLDER="deployment/container" \
                             --build-arg EXPORT_PORT="${props.export_port}" \
-                            -f deployment/Dockerfile-mp-client \
+                            -f deployment/container/Dockerfile-mp-client \
                             -t ${imagePath} .
                         
                         podman push ${imagePath}
