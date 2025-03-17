@@ -1,0 +1,60 @@
+apiVersion: v1
+data:
+  runtime-env.js: "window.__runtime_config__ = {\n  AUTH_URL: 'http://20.249.176.215/api/auth',\n  BILLING_URL: 'http://20.249.176.215/api/billings',\n  PRODUCT_URL: 'http://20.249.176.215/api/products',\n  CUSTOMER_URL: 'http://20.249.176.215/api/customers'\n};\n"
+kind: ConfigMap
+metadata:
+  name: mp-client-cm
+  namespace: ${namespace}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mp-client
+  namespace: ${namespace}
+spec:
+  replicas: ${replicas}
+  selector:
+    matchLabels:
+      app: mp-client
+  template:
+    metadata:
+      labels:
+        app: mp-client
+    spec:
+      containers:
+      - image: ${lifesub_web_image_path}
+        imagePullPolicy: Always
+        name: mp-client
+        ports:
+        - containerPort: ${export_port}
+        resources:
+          limits:
+            cpu: ${resources_limits_cpu}
+            memory: ${resources_limits_memory}
+          requests:
+            cpu: ${resources_requests_cpu}
+            memory: ${resources_requests_memory}
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html/runtime-env.js
+          name: runtime-config
+          subPath: runtime-env.js
+      volumes:
+      - configMap:
+          name: mp-client-cm
+        name: runtime-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mp-client
+  namespace: ${namespace}
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: ${export_port}
+  selector:
+    app: mp-client
+  type: LoadBalancer
