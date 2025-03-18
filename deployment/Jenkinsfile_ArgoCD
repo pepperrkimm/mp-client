@@ -97,8 +97,8 @@ podTemplate(
                     sh """
                         cd ${manifestDir}
                         # yq 대신 sed 사용하여 이미지 태그 업데이트
-                        sed -i 's|image: ${props.registry}/${props.image_org}/mp-client:.*|image: ${imagePath}|g' mp-client/deployment/mp-client-deployment.yaml
-                        git add mp-client/deployment/mp-client-deployment.yaml
+                        sed -i 's|image: ${props.registry}/${props.image_org}/mp-client:.*|image: ${imagePath}|g' mp-client-manifest/deployment/mp-client-deploy.yaml
+                        git add mp-client-manifest/deployment/mp-client-deploy.yaml
                     """
 
                     // 변경사항 커밋 및 푸시
