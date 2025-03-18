@@ -13,7 +13,7 @@ podTemplate(
         containerTemplate(name: 'node', image: 'node:20-slim', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'podman', image: "mgoltzsche/podman", ttyEnabled: true, command: 'cat', privileged: true),
         containerTemplate(name: 'azure-cli', image: 'hiondal/azure-kubectl:latest', command: 'cat', ttyEnabled: true),
-        containerTemplate(name: 'envsubst', image: "hiondal/envsubst", command: 'sleep', args: '1h'),
+        containerTemplate(name: 'git', image: 'alpine/git:latest', command: 'cat', ttyEnabled: true),
         containerTemplate(name: 'sonar-scanner', image: 'sonarsource/sonar-scanner-cli:latest', command: 'cat', ttyEnabled: true)
     ],
     volumes: [
@@ -24,9 +24,9 @@ podTemplate(
     node(PIPELINE_ID) {
         def props
         def imageTag = getImageTag()
-        def manifest = "deploy.yaml"
         def namespace
-        def sonarScannerHome = '/opt/sonar-scanner'
+        def manifestRepo = "https://github.com/HyoJooJo/mvne-manifest.git"
+        def manifestDir = "mvne-manifest"
 
         stage("Get Source") {
             checkout scm
@@ -78,35 +78,44 @@ podTemplate(
             }
         }
 
-        stage('Generate & Apply Manifest') {
-            container('envsubst') {
-                sh """
-                    export namespace=${namespace}
-                    export lifesub_web_image_path=${props.registry}/${props.image_org}/mp-client:${imageTag}
-                    export replicas=${props.replicas}
-                    export export_port=${props.export_port}
-                    export resources_requests_cpu=${props.resources_requests_cpu}
-                    export resources_requests_memory=${props.resources_requests_memory}
-                    export resources_limits_cpu=${props.resources_limits_cpu}
-                    export resources_limits_memory=${props.resources_limits_memory}
-                    
-                    envsubst < deployment/${manifest}.template > deployment/${manifest}
-                    cat deployment/${manifest}
-                """
-            }
+        stage('Update Deployment Manifest') {
+            container('git') {
+                withCredentials([usernamePassword(
+                    credentialsId: 'github-credentials',
+                    usernameVariable: 'GIT_USERNAME',
+                    passwordVariable: 'GIT_PASSWORD'
+                )]) {
+                    // GitHub 인증 설정
+                    sh """
+                        git config --global user.email "jenkins@example.com"
+                        git config --global user.name "Jenkins CI"
+                        git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/HyoJooJo/mvne-manifest.git ${manifestDir}
+                    """
 
+                    // 프론트엔드 이미지 업데이트
+                    def imagePath = "${props.registry}/${props.image_org}/mp-client:${imageTag}"
+                    sh """
+                        cd ${manifestDir}
+                        # yq 대신 sed 사용하여 이미지 태그 업데이트
+                        sed -i 's|image: ${props.registry}/${props.image_org}/mp-client:.*|image: ${imagePath}|g' mp-client/deployment/mp-client-deployment.yaml
+                        git add mp-client/deployment/mp-client-deployment.yaml
+                    """
+
+                    // 변경사항 커밋 및 푸시
+                    sh """
+                        cd ${manifestDir}
+                        git commit -m "Update frontend image to tag ${imageTag}" || echo "No changes to commit"
+                        git push
+                    """
+                }
+            }
+        }
+
+        stage('Verify Deployment') {
             container('azure-cli') {
                 sh """
-                    kubectl apply -f deployment/${manifest}
-                    
-                    echo "Waiting for deployment to be ready..."
-                    kubectl -n ${namespace} wait --for=condition=available deployment/mp-client --timeout=300s
-                    
-                    echo "Waiting for service external IP..."
-                    while [[ -z \$(kubectl -n ${namespace} get svc mp-client -o jsonpath='{.status.loadBalancer.ingress[0].ip}') ]]; do
-                        sleep 5
-                    done
-                    echo "Service external IP: \$(kubectl -n ${namespace} get svc mp-client -o jsonpath='{.status.loadBalancer.ingress[0].ip}')"
+                    echo "ArgoCD will automatically sync and deploy the updated manifest."
+                    echo "Frontend service updated with image tag: ${imageTag}"
                 """
             }
         }
