@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="42b54963-c954-4fb4-a065-d11fc98c1d80" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/node_modules/.cache/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/0.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/0.pack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/default-development/index.pack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
     </list>
+=======
+    <list default="true" id="f891b823-1562-4518-a5a9-8a44bf594260" name="변경" comment="" />
+>>>>>>> acfb20b44afa81604e26291824cb8b51acaccc53
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,10 +19,17 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+<<<<<<< HEAD
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 5
 }]]></component>
   <component name="ProjectId" id="2uHkk7vyKeCXiQPXMzL2hl1GM4J" />
+=======
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2uR5lYc3hWcL9ngy7p72fF9xdQb" />
+>>>>>>> acfb20b44afa81604e26291824cb8b51acaccc53
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -28,17 +39,29 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
+<<<<<<< HEAD
+=======
+    "ignore.virus.scanning.warn.message": "true",
+>>>>>>> acfb20b44afa81604e26291824cb8b51acaccc53
     "last_opened_file_path": "C:/home/workspace/mp-server"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="디폴트 작업">
+<<<<<<< HEAD
       <changelist id="42b54963-c954-4fb4-a065-d11fc98c1d80" name="변경" comment="" />
       <created>1741913027149</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1741913027149</updated>
+=======
+      <changelist id="f891b823-1562-4518-a5a9-8a44bf594260" name="변경" comment="" />
+      <created>1742198697725</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1742198697725</updated>
+>>>>>>> acfb20b44afa81604e26291824cb8b51acaccc53
     </task>
     <servers />
   </component>

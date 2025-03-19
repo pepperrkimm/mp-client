@@ -1,0 +1,18 @@
+# Team Settings
+teamid=oteam
+root_project=mp-client
+namespace=oteam-mvne-ns
+
+# Container Registry Settings
+registry=oteamcr.azurecr.io
+image_org=mvne
+
+# Application Settings
+replicas=1
+export_port=18080
+
+# Resource Settings
+resources_requests_cpu=256m
+resources_requests_memory=256Mi
+resources_limits_cpu=1024m
+resources_limits_memory=1024Mi
