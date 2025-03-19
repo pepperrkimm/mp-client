@@ -1,6 +1,7 @@
 import api, { config } from './api';
 import axios from 'axios';
-
+const CUSTOMER_URL = window.__runtime_config__?.CUSTOMER_URL || 'http://localhost:8080';
+const PRODUCT_URL = window.__runtime_config__?.PRODUCT_URL || 'http://localhost:8080';
 // export const getCustomerInfo = async (phoneNumber) => {
 //   try {
 //     const response = await api.get(`${config.CUSTOMER_URL}/${phoneNumber}`);
@@ -13,7 +14,7 @@ import axios from 'axios';
 export const getCustomerInfo = async (phoneNumber) => {
   try {
     // 전체 URL을 직접 지정
-    const response = await axios.get(`http://localhost:8081/api/customers/${phoneNumber}`);
+    const response = await axios.get(CUSTOMER_URL+`/${phoneNumber}`);
     console.log("Response",response.data)
     return response.data;
   } catch (error) {
@@ -24,7 +25,7 @@ export const getCustomerInfo = async (phoneNumber) => {
 
 export const checkProductChange = async (phoneNumber, productCode) => {
   try {
-    const response = await api.get(`http://localhost:8082/api/products/check`, {
+    const response = await api.get(PRODUCT_URL+`/check`, {
       params: { phoneNumber, productCode }
     });
     return response.data;
@@ -35,7 +36,7 @@ export const checkProductChange = async (phoneNumber, productCode) => {
 
 export const changeProduct = async (phoneNumber, productCode, changeReason) => {
   try {
-    const response = await api.post(`http://localhost:8082/api/products/change`, {
+    const response = await api.post(PRODUCT_URL+`/change`, {
       phoneNumber,
       productCode,
       changeReason
