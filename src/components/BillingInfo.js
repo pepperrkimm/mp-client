@@ -153,10 +153,10 @@ const BillingInfo = ({ specific = false }) => {
           <Paper elevation={2} sx={{ p: 0, borderRadius: 2, overflow: 'hidden' }}>
             <Box sx={{ bgcolor: 'primary.main', p: 2, color: 'white' }}>
               <Typography variant="subtitle1">
-                {formatMonth(billingInfo.billingMonth)} 청구 요금
+                {formatMonth(billingInfo.data.billingMonth)} 청구 요금
               </Typography>
               <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-                {billingInfo.totalFee.toLocaleString()}원
+                {billingInfo.data.totalFee.toLocaleString()}원
               </Typography>
             </Box>
             
@@ -167,7 +167,7 @@ const BillingInfo = ({ specific = false }) => {
               
               <Card variant="outlined" sx={{ mb: 3 }}>
                 <CardContent>
-                  {billingInfo.details.map((detail, index) => (
+                  {billingInfo.data.details.map((detail, index) => (
                     <React.Fragment key={index}>
                       {index > 0 && <Divider sx={{ my: 1 }} />}
                       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -179,7 +179,7 @@ const BillingInfo = ({ specific = false }) => {
                 </CardContent>
               </Card>
 
-              {billingInfo.discounts && billingInfo.discounts.length > 0 && (
+              {billingInfo.data.discounts && billingInfo.data.discounts.length > 0 && (
                 <>
                   <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1 }}>
                     할인 내역
@@ -187,7 +187,7 @@ const BillingInfo = ({ specific = false }) => {
                   
                   <Card variant="outlined" sx={{ mb: 3 }}>
                     <CardContent>
-                      {billingInfo.discounts.map((discount, index) => (
+                      {billingInfo.data.discounts.map((discount, index) => (
                         <React.Fragment key={index}>
                           {index > 0 && <Divider sx={{ my: 1 }} />}
                           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -203,7 +203,7 @@ const BillingInfo = ({ specific = false }) => {
                 </>
               )}
 
-              {billingInfo.deviceInstallment && billingInfo.deviceInstallment.amount > 0 && (
+              {billingInfo.data.deviceInstallment && billingInfo.data.deviceInstallment.amount > 0 && (
                 <>
                   <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1 }}>
                     단말기 할부 정보
@@ -214,11 +214,11 @@ const BillingInfo = ({ specific = false }) => {
                       <Grid container spacing={1}>
                         <Grid item xs={6}>
                           <Typography variant="body2" color="textSecondary">단말기 모델</Typography>
-                          <Typography variant="body1">{billingInfo.deviceInstallment.model}</Typography>
+                          <Typography variant="body1">{billingInfo.data.deviceInstallment.model}</Typography>
                         </Grid>
                         <Grid item xs={6}>
                           <Typography variant="body2" color="textSecondary">잔여 할부 개월</Typography>
-                          <Typography variant="body1">{billingInfo.deviceInstallment.remainingMonths}개월</Typography>
+                          <Typography variant="body1">{billingInfo.data.deviceInstallment.remainingMonths}개월</Typography>
                         </Grid>
                         <Grid item xs={12} sx={{ mt: 1 }}>
                           <Divider />
@@ -227,7 +227,7 @@ const BillingInfo = ({ specific = false }) => {
                           <Typography variant="body2" color="textSecondary">월 할부금</Typography>
                         </Grid>
                         <Grid item xs={6} sx={{ mt: 1 }}>
-                          <Typography variant="body1" align="right">{billingInfo.deviceInstallment.amount.toLocaleString()}원</Typography>
+                          <Typography variant="body1" align="right">{billingInfo.data.deviceInstallment.amount.toLocaleString()}원</Typography>
                         </Grid>
                       </Grid>
                     </CardContent>

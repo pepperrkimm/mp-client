@@ -129,7 +129,7 @@ const ProductChange = () => {
 
   const handleCloseResultDialog = () => {
     setOpenResultDialog(false);
-    if (changeResult && changeResult.success) {
+    if (changeResult && changeResult.data.success) {
       navigate(`/customer-info`);
     }
   };
@@ -165,12 +165,12 @@ const ProductChange = () => {
               <CardContent>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                   <Typography variant="body2" color="textSecondary">상품명</Typography>
-                  <Typography variant="body1">{customerInfo.currentProduct.productName}</Typography>
+                  <Typography variant="body1">{customerInfo.data.currentProduct.productName}</Typography>
                 </Box>
                 <Divider sx={{ my: 1 }} />
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Typography variant="body2" color="textSecondary">월 요금</Typography>
-                  <Typography variant="body1">{customerInfo.currentProduct.fee.toLocaleString()}원</Typography>
+                  <Typography variant="body1">{customerInfo.data.currentProduct.fee.toLocaleString()}원</Typography>
                 </Box>
               </CardContent>
             </Card>
@@ -186,7 +186,7 @@ const ProductChange = () => {
                 value={selectedProduct}
                 onChange={handleProductSelect}
               >
-                {PRODUCT_CODES.filter(code => code !== customerInfo.currentProduct.productCode).map((code) => (
+                {PRODUCT_CODES.filter(code => code !== customerInfo.data.currentProduct.productCode).map((code) => (
                   <FormControlLabel
                     key={code}
                     value={code}
@@ -217,13 +217,13 @@ const ProductChange = () => {
             {productCheckResult && (
               <>
                 <Alert 
-                  severity={productCheckResult.available ? "success" : "error"}
+                  severity={productCheckResult.data.available ? "true" : "error"}
                   sx={{ mb: 2 }}
                 >
                   {productCheckResult.message}
                 </Alert>
 
-                {productCheckResult.available && (
+                {productCheckResult.data.available && (
                   <>
                     <Card variant="outlined" sx={{ mb: 3 }}>
                       <CardContent>
@@ -232,12 +232,12 @@ const ProductChange = () => {
                         </Typography>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                           <Typography variant="body2" color="textSecondary">상품명</Typography>
-                          <Typography variant="body1">{productCheckResult.targetProduct.productName}</Typography>
+                          <Typography variant="body1">{productCheckResult.data.targetProduct.productName}</Typography>
                         </Box>
                         <Divider sx={{ my: 1 }} />
                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                           <Typography variant="body2" color="textSecondary">월 요금</Typography>
-                          <Typography variant="body1">{productCheckResult.targetProduct.fee.toLocaleString()}원</Typography>
+                          <Typography variant="body1">{productCheckResult.data.targetProduct.fee.toLocaleString()}원</Typography>
                         </Box>
                       </CardContent>
                     </Card>
@@ -298,15 +298,15 @@ const ProductChange = () => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              {changeResult?.message}
+              {changeResult?.data?.message}
               
-              {changeResult?.success && (
+              {changeResult?.data?.success && (
                 <>
                   <br/><br/>
-                  이전 상품: {changeResult.previousProduct.productName}<br/>
-                  변경된 상품: {changeResult.newProduct.productName}<br/>
-                  {changeResult.additionalFee > 0 && (
-                    <>추가 요금: {changeResult.additionalFee.toLocaleString()}원</>
+                  이전 상품: {changeResult.data.previousProduct.productName}<br/>
+                  변경된 상품: {changeResult.data.newProduct.productName}<br/>
+                  {changeResult.data.additionalFee > 0 && (
+                    <>추가 요금: {changeResult.data.additionalFee.toLocaleString()}원</>
                   )}
                 </>
               )}

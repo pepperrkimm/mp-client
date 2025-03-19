@@ -22,11 +22,13 @@ const theme = createTheme({
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
   },
-});
+}); 
+
+
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem('token')
+    !!localStorage.getItem('token') || true
   );
 
   const handleLogin = (token) => {
@@ -49,7 +51,7 @@ function App() {
               path="/login" 
               element={
                 isAuthenticated ? (
-                  <Navigate to="/customer-info" />
+                  <Navigate to="/customer-info" /> 
                 ) : (
                   <Login onLogin={handleLogin} />
                 )

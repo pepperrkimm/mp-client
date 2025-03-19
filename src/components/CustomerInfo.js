@@ -105,7 +105,7 @@ const CustomerInfo = ({ onLogout }) => {
           <Paper elevation={2} sx={{ p: 0, borderRadius: 2, overflow: 'hidden' }}>
             <Box sx={{ bgcolor: 'primary.main', p: 2, color: 'white' }}>
               <Typography variant="h6">
-                회선 상태: {customerInfo.status}
+                회선 상태: {customerInfo.data.status}
               </Typography>
             </Box>
             
@@ -118,12 +118,12 @@ const CustomerInfo = ({ onLogout }) => {
                 <CardContent>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                     <Typography variant="body2" color="textSecondary">상품명</Typography>
-                    <Typography variant="body1">{customerInfo.currentProduct.productName}</Typography>
+                    <Typography variant="body1">{customerInfo.data.currentProduct.productName}</Typography>
                   </Box>
                   <Divider sx={{ my: 1 }} />
                   <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="body2" color="textSecondary">월 요금</Typography>
-                    <Typography variant="body1">{customerInfo.currentProduct.fee.toLocaleString()}원</Typography>
+                    <Typography variant="body1">{customerInfo.data.currentProduct.fee.toLocaleString()}원</Typography>
                   </Box>
                 </CardContent>
               </Card>
