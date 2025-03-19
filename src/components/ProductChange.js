@@ -27,7 +27,7 @@ import Header from './Header';
 import { getCustomerInfo, checkProductChange, changeProduct } from '../services/product';
 
 // 테스트용 상품 코드 목록
-const PRODUCT_CODES = ['BASIC', 'STANDARD', 'PREMIUM', 'FAMILY', 'BUSINESS'];
+const PRODUCT_CODES = ['5GX_STANDARD', '5GX_PREMIUM', 'FAMILY', 'BUSINESS'];
 
 const ProductChange = () => {
   const { phoneNumber } = useParams();
@@ -113,6 +113,7 @@ const ProductChange = () => {
     setError('');
 
     try {
+      console.log(phoneNumber, selectedProduct, changeReason);
       const response = await changeProduct(phoneNumber, selectedProduct, changeReason);
       setChangeResult(response);
       setOpenConfirmDialog(false);
@@ -294,7 +295,7 @@ const ProductChange = () => {
           onClose={handleCloseResultDialog}
         >
           <DialogTitle>
-            {changeResult?.success ? '상품 변경 완료' : '상품 변경 실패'}
+            {changeResult?.data?.success ? '상품 변경 완료' : '상품 변경 실패'}
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
