@@ -221,9 +221,9 @@ const ProductChange = () => {
                   severity={productCheckResult.data.available ? "success" : "error"}
                   sx={{ mb: 2 }}
                 >
-                  {productCheckResult.data.available 
-                    ? "변경 가능합니다." 
-                    : "변경 불가능합니다."}
+                  {productCheckResult.data.available
+                    ? "변경 가능합니다."
+                    : productCheckResult.data.message || "변경 불가능합니다."}
                 </Alert>
 
                 {productCheckResult.data.available && (
