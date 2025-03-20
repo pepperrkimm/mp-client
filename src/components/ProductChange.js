@@ -27,7 +27,7 @@ import Header from './Header';
 import { getCustomerInfo, checkProductChange, changeProduct } from '../services/product';
 
 // 테스트용 상품 코드 목록
-const PRODUCT_CODES = ['5GX_STANDARD', '5GX_PREMIUM', 'FAMILY', 'BUSINESS'];
+const PRODUCT_CODES = ['5GX_STANDARD', '5GX_PREMIUM', '5GX_SIGNATURE', 'LTE_STANDARD','LTE_PREMIUM'];
 
 const ProductChange = () => {
   const { phoneNumber } = useParams();
@@ -97,10 +97,10 @@ const ProductChange = () => {
   };
 
   const handleOpenConfirmDialog = () => {
-    if (!changeReason) {
-      setError('변경 사유를 입력해주세요.');
-      return;
-    }
+    // if (!changeReason) {
+    //   setError('변경 사유를 입력해주세요.');
+    //   return;
+    // }
     setOpenConfirmDialog(true);
   };
 
@@ -113,7 +113,7 @@ const ProductChange = () => {
     setError('');
 
     try {
-      console.log(phoneNumber, selectedProduct, changeReason);
+      //console.log(phoneNumber, selectedProduct, changeReason);
       const response = await changeProduct(phoneNumber, selectedProduct, changeReason);
       setChangeResult(response);
       setOpenConfirmDialog(false);
@@ -218,10 +218,12 @@ const ProductChange = () => {
             {productCheckResult && (
               <>
                 <Alert 
-                  severity={productCheckResult.data.available ? "true" : "error"}
+                  severity={productCheckResult.data.available ? "success" : "error"}
                   sx={{ mb: 2 }}
                 >
-                  {productCheckResult.message}
+                  {productCheckResult.data.available 
+                    ? "변경 가능합니다." 
+                    : "변경 불가능합니다."}
                 </Alert>
 
                 {productCheckResult.data.available && (
@@ -243,7 +245,7 @@ const ProductChange = () => {
                       </CardContent>
                     </Card>
 
-                    <TextField
+                    {/* <TextField
                       fullWidth
                       label="변경 사유"
                       multiline
@@ -251,13 +253,13 @@ const ProductChange = () => {
                       value={changeReason}
                       onChange={(e) => setChangeReason(e.target.value)}
                       sx={{ mb: 2 }}
-                    />
+                    /> */}
 
                     <Button
                       variant="contained"
                       fullWidth
                       onClick={handleOpenConfirmDialog}
-                      disabled={!changeReason}
+                      //disabled={!changeReason}
                     >
                       상품 변경하기
                     </Button>
